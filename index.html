@@ -4,10 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
   <title>Font and Sound</title>
 </head>
 <body>
-  <h1>HELLO</h1>
+  <div class="container">
+    <div class="column">
+      <div class="column__item">
+        <div class="main">
+          <h1 class="main__heading js-ctrl_typeface" data-target="heading-bass" data-typeface="kairo">FONT AND SOUND</h1>
+          <p class="main__paragraph js-ctrl_typeface" data-target="paragraph-melody" data-typeface="kairo">
+            Monotype is pleased to introduce our first Variable Font demo. Kairos Sans was designed by Terrance Weinzierl and produced by Monotype’s font development team.
+            Kairos Sans is an octagonal sans serif typeface with bold simplicity, with a design influenced by 19th Century Grecian typefaces. It features a full palette of weights and widths; including complementary italics.
+            This Variable Font demo was made to showcase the capabilities in the new OpenType version 1.8 specification. Please read the EULA, which limits usage for development, prototyping and testing purposes – and not for re-distribution or commercial use.
+          </p>
+        </div>
+      </div>
+      <div class="column__item">
+        <div class="side">
+          <div class="ctrls">
+            <div class="ctrls__wrapper">
+              <h3 class="ctrls__title">HEADING</h3>
+              <form class="ctrls__sliders sliders">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th class="sliders__type">
+                        <h4 class="sliders__type-title">weight</h4>
+                      </th>
+                      <td class="sliders__bar-val -min">250</td>
+                      <td class="sliders__slide">
+                        <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -wght" name="wght" value="500" min="250" max="900">
+                      </td>
+                      <td class="sliders__bar-val -max">900</td>
+                    </tr>
+                    <tr>
+                      <th class="sliders__type">
+                        <h4 class="sliders__type-title">size</h4>
+                      </th>
+                      <td class="sliders__bar-val -min">1</td>
+                      <td class="sliders__slide">
+                        <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -size" name="font-size" value="8" min="1" max="10">
+                      </td>
+                      <td class="sliders__bar-val -max">10</td>
+                    </tr>
+                    <tr>
+                      <th class="sliders__type">
+                        <h4 class="sliders__type-title">width</h4>
+                      </th>
+                      <td class="sliders__bar-val -min">75</td>
+                      <td class="sliders__slide">
+                        <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -wdth" name="wdth" value="75" min="75" max="125">
+                      </td>
+                      <td class="sliders__bar-val -max">125</td>
+                    </tr>
+                    <tr>
+                      <th class="sliders__type">
+                        <h4 class="sliders__type-title">italic</h4>
+                      </th>
+                      <td class="sliders__bar-val -min">0</td>
+                      <td class="sliders__slide">
+                        <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -ital" name="ital" value="0" min="0" max="1">
+                      </td>
+                      <td class="sliders__bar-val -max">1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="./script.js"></script>
 </body>
 </html>
