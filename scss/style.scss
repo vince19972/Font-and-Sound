@@ -1,0 +1,12 @@
+@font-face {
+  /* Karos Sans Variable */
+  font-family: "Karos Sans Variable";
+	src: url('/assets/fonts/KairosSans_Variable.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+}
+
+html, body {
+  font-family: "Karos Sans Variable", "Adobe Blank";
+  font-size: 80px;
+}
