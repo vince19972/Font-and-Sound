@@ -20,6 +20,7 @@ export const params = {
       min: -24,
       max: 24
     },
+    distortion: 0,
     interval: '4n'
   }
 }

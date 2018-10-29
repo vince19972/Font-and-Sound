@@ -91,7 +91,12 @@ $(document).ready(function() {
   if (hasTone) {
     // vars declaration
     const $triggers = $(nodes.trigger)
-    const { pitch: bassPitch, interval: bassInterval, volume: bassVolume } = params.bass
+    const {
+      pitch: bassPitch,
+      interval: bassInterval,
+      volume: bassVolume,
+      distortion: bassDistortion
+    } = params.bass
 
     // init basic settings
     set.initToneObj($tone, bassPitch.val)
@@ -112,6 +117,8 @@ $(document).ready(function() {
           soundObj.sampler.triggerAttack(bassPitch.val)
           soundObj.sampler.volume.value = bassVolume.val
         }, bassInterval)
+
+        // transport
         Tone.Transport.start()
       } else {
         Tone.Transport.stop()

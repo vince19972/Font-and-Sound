@@ -86,6 +86,9 @@ const set = {
         case 'wdth':
           Tone.Transport.bpm.value = get.scaleVal(initVal, minVal, maxVal, params.bpm.min, params.bpm.max)
           break
+        case 'ital':
+          store.toneSets[fontType][alterTarget].params.distortion = 0
+          break
       }
     })
   },
@@ -106,6 +109,16 @@ const set = {
         break;
       case 'wdth':
         Tone.Transport.bpm.value = get.scaleVal(val, minVal, maxVal, params.bpm.min, params.bpm.max)
+        break;
+      case 'ital':
+        toneObj.params.distortion = val
+        params.bass.distortion = toneObj.params.distortion
+
+        // effect
+        toneObj.sampler.disconnect()
+        const distortion = new Tone.Distortion(val)
+        toneObj.sampler.connect(distortion)
+        distortion.toMaster()
         break;
     }
   },
