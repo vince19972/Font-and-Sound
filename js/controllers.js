@@ -83,6 +83,9 @@ const set = {
         case 'font-size':
           store.toneSets[fontType][alterTarget].params.volume = get.mappedVal('bass', 'volume', initVal, minVal, maxVal)
           break
+        case 'wdth':
+          Tone.Transport.bpm.value = get.scaleVal(initVal, minVal, maxVal, params.bpm.min, params.bpm.max)
+          break
       }
     })
   },
@@ -96,12 +99,13 @@ const set = {
 
         toneObj.params.pitch = currentPitch.replace(/\d/, get.mappedVal('bass', 'pitch', val, minVal, maxVal))
         params.bass.pitch.val = toneObj.params.pitch
-
         break
       case 'font-size':
         toneObj.params.volume = get.mappedVal('bass', 'volume', val, minVal, maxVal)
         params.bass.volume.val = toneObj.params.volume
-
+        break;
+      case 'wdth':
+        Tone.Transport.bpm.value = get.scaleVal(val, minVal, maxVal, params.bpm.min, params.bpm.max)
         break;
     }
   },

@@ -4,7 +4,7 @@ export const store = {
 
 export const params = {
   bpm: {
-    val: 112,
+    val: 100,
     min: 50,
     max: 225
   },
