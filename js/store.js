@@ -15,6 +15,11 @@ export const params = {
       min: 0,
       max: 8
     },
+    volume: {
+      val: 8,
+      min: -24,
+      max: 24
+    },
     interval: '4n'
   }
 }

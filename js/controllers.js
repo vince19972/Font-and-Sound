@@ -63,6 +63,10 @@ const get = {
     const val = (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
     // console.log(num, in_min, in_max, out_min, out_max)
     return isInt ? parseInt(val) : val
+  },
+  mappedVal(type, param, initVal, minVal, maxVal) {
+    const { min, max } = params[type][param]
+    return get.scaleVal(initVal, minVal, maxVal, min, max)
   }
 }
 
@@ -71,29 +75,34 @@ const set = {
     slides.each((index, slide) => {
       const $slide = $(slide)
       const { alterTarget, fontType, slideType, initVal, minVal, maxVal } = get.slideData($slide)
+
       switch (slideType) {
         case 'wght':
-          const { min, max } = params.bass.pitch
-          const mappedVal = get.scaleVal(initVal, minVal, maxVal, min, max)
-          store.toneSets[fontType][alterTarget].params.pitch = `C${mappedVal}`
+          store.toneSets[fontType][alterTarget].params.pitch = `C${get.mappedVal('bass', 'pitch', initVal, minVal, maxVal)}`
+          break
+        case 'font-size':
+          store.toneSets[fontType][alterTarget].params.volume = get.mappedVal('bass', 'volume', initVal, minVal, maxVal)
           break
       }
     })
   },
   updateSound(slide, val) {
     const { alterTarget, fontType, slideType, minVal, maxVal } = get.slideData(slide)
+    const toneObj = store.toneSets[fontType][alterTarget]
 
     switch (slideType) {
       case 'wght':
-        const { min, max } = params.bass.pitch
-        const mappedVal = get.scaleVal(val, minVal, maxVal, min, max)
-        const toneObj = store.toneSets[fontType][alterTarget]
         const currentPitch = toneObj.params.pitch
 
-        toneObj.params.pitch = currentPitch.replace(/\d/, mappedVal)
+        toneObj.params.pitch = currentPitch.replace(/\d/, get.mappedVal('bass', 'pitch', val, minVal, maxVal))
         params.bass.pitch.val = toneObj.params.pitch
 
         break
+      case 'font-size':
+        toneObj.params.volume = get.mappedVal('bass', 'volume', val, minVal, maxVal)
+        params.bass.volume.val = toneObj.params.volume
+
+        break;
     }
   },
   updateStyle(target, val, type, isVariableFont) {
@@ -134,8 +143,6 @@ $(document).ready(function() {
 
       set.updateStyle($target, val, slideType, isVarFont)
       set.updateSound($slide, val)
-
-      // console.log(store.toneSets)
     })
 
   }

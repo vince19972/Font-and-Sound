@@ -91,7 +91,7 @@ $(document).ready(function() {
   if (hasTone) {
     // vars declaration
     const $triggers = $(nodes.trigger)
-    const { pitch: bassPitch, interval: bassInterval } = params.bass
+    const { pitch: bassPitch, interval: bassInterval, volume: bassVolume } = params.bass
 
     // init basic settings
     set.initToneObj($tone, bassPitch.val)
@@ -105,15 +105,22 @@ $(document).ready(function() {
 
       // update state
       soundObj.isPlaying = !soundObj.isPlaying
+
       // play sound
       if (soundObj.isPlaying) {
         Tone.Transport.scheduleRepeat(() => {
           soundObj.sampler.triggerAttack(bassPitch.val)
+          soundObj.sampler.volume.value = bassVolume.val
         }, bassInterval)
         Tone.Transport.start()
       } else {
         Tone.Transport.stop()
       }
+
+      // update style
+      soundObj.isPlaying
+        ? $trigger.addClass('-is-active')
+        : $trigger.removeClass('-is-active')
     })
   }
 })
