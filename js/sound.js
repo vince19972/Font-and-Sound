@@ -49,9 +49,9 @@ const set = {
 
       const ampEnv = new Tone.AmplitudeEnvelope({
         "attack": 0,
-        "decay": 0.3,
-        "sustain": 1,
-        "release": 1
+        "decay": 0,
+        "sustain": 0.2,
+        "release": 0
       })
       ampEnv.releaseCurve = "linear"
       ampEnv.connect(toneFilter)
@@ -76,7 +76,9 @@ const set = {
         ampEnv,
         osc,
         isPlaying: false,
-        params: {}
+        params: {
+          step: 0
+        }
       }
     })
   },
@@ -109,15 +111,14 @@ const set = {
   initToneObj(toneSet, samplerPitch, isBass) {
     const $toneSet = $(toneSet)
     const { fontType, soundTarget } = get.toneData($toneSet)
-    const $childTones = $toneSet.find(nodes.trigger)
 
     if ($.isEmptyObject(store.toneSets))
       store.toneSets[fontType] = {}
 
     if (isBass)
-      set.initBass($childTones, samplerPitch, fontType, soundTarget)
+      set.initBass($toneSet, samplerPitch, fontType, soundTarget)
     else
-      set.initMelody($childTones, fontType, soundTarget)
+      set.initMelody($toneSet, fontType, soundTarget)
   },
   initToneSetting() {
     const { bpm, timeSignature } = params
@@ -161,29 +162,37 @@ $(document).ready(function() {
     // trigger event
     $triggers.on('click', event => {
       const $trigger = $(event.currentTarget)
-      const { fontType, soundTarget } = get.toneData($trigger)
-      const soundObj = store.toneSets[fontType][soundTarget]
-
-      // update state
-      soundObj.isPlaying = !soundObj.isPlaying
+      const { fontType } = get.toneData($trigger)
+      // const soundObj = store.toneSets[fontType][soundTarget]
+      const bassObj = store.toneSets[fontType]['heading-bass']
+      const melodyObj = store.toneSets[fontType]['paragraph-melody']
 
       // play sound
-      if (soundObj.isPlaying) {
+      if (!bassObj.isPlaying) {
         Tone.Transport.scheduleRepeat(() => {
-          soundObj.sampler.triggerAttack(bassPitch.val)
-          soundObj.sampler.volume.value = bassVolume.val
+          bassObj.sampler.triggerAttack(bassPitch.val)
+          bassObj.sampler.volume.value = bassVolume.val
+        }, bassInterval)
+
+        Tone.Transport.scheduleRepeat(() => {
+          melodyObj.osc.frequency.value = 'C1'
+          melodyObj.ampEnv.triggerAttack()
         }, bassInterval)
 
         // transport
         Tone.Transport.start()
       } else {
+        melodyObj.ampEnv.triggerRelease()
         Tone.Transport.stop()
       }
 
+      // update state
+      bassObj.isPlaying = !bassObj.isPlaying
+
       // update style
-      soundObj.isPlaying
-        ? $trigger.addClass('-is-active')
-        : $trigger.removeClass('-is-active')
+      bassObj.isPlaying
+        ? $triggers.addClass('-is-active')
+        : $triggers.removeClass('-is-active')
     })
   }
 })
