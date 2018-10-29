@@ -61,7 +61,6 @@ const get = {
   },
   scaleVal (num, in_min, in_max, out_min, out_max, isInt = true) {
     const val = (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
-    // console.log(num, in_min, in_max, out_min, out_max)
     return isInt ? parseInt(val) : val
   },
   mappedVal(type, param, initVal, minVal, maxVal) {
@@ -76,19 +75,21 @@ const set = {
       const $slide = $(slide)
       const { alterTarget, fontType, slideType, initVal, minVal, maxVal } = get.slideData($slide)
 
-      switch (slideType) {
-        case 'wght':
-          store.toneSets[fontType][alterTarget].params.pitch = `C${get.mappedVal('bass', 'pitch', initVal, minVal, maxVal)}`
-          break
-        case 'font-size':
-          store.toneSets[fontType][alterTarget].params.volume = get.mappedVal('bass', 'volume', initVal, minVal, maxVal)
-          break
-        case 'wdth':
-          Tone.Transport.bpm.value = get.scaleVal(initVal, minVal, maxVal, params.bpm.min, params.bpm.max)
-          break
-        case 'ital':
-          store.toneSets[fontType][alterTarget].params.distortion = 0
-          break
+      if (alterTarget === 'heading-bass') {
+        switch (slideType) {
+          case 'wght':
+            store.toneSets[fontType][alterTarget].params.pitch = `C${get.mappedVal('bass', 'pitch', initVal, minVal, maxVal)}`
+            break
+          case 'font-size':
+            store.toneSets[fontType][alterTarget].params.volume = get.mappedVal('bass', 'volume', initVal, minVal, maxVal)
+            break
+          case 'wdth':
+            Tone.Transport.bpm.value = get.scaleVal(initVal, minVal, maxVal, params.bpm.min, params.bpm.max)
+            break
+          case 'ital':
+            store.toneSets[fontType][alterTarget].params.distortion = 0
+            break
+        }
       }
     })
   },
@@ -132,6 +133,12 @@ const set = {
       switch (type) {
         case 'font-size':
           unit = 'vw'
+          break
+        case 'line-height':
+          unit = 'em'
+          break
+        case 'letter-spacing':
+          unit = 'em'
           break
       }
       target.css(type, `${val}${unit}`)

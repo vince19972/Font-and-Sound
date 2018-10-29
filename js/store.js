@@ -1,5 +1,14 @@
 export const store = {
-  toneSets: {}
+  toneSets: {},
+  kairo: {
+    melody: [
+      'D5', '',
+      'C5', 'D5', 'F5', 'A4', '',
+      'G4', 'A4', 'C5', 'F4', '',
+      'E4', 'F4', 'A4', 'D4', '',
+      'E4', 'F4'
+    ]
+  }
 }
 
 export const params = {
