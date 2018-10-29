@@ -7,6 +7,8 @@
 $f-main: "Karos Sans Variable";
 $f-sub: 'Roboto', sans-serif;
 $clm-main: 1440px;
+$c-orange: rgba(255, 81, 0, 0.925);
+$c-blue: rgba(4, 0, 255, 0.87);
 
 /* ------------------------------------
 *  Base Settings
@@ -74,6 +76,10 @@ html, body {
   & .ctrls__wrapper {
     margin-bottom: 48px;
 
+    &.-btn {
+      padding-top: 240px;
+    }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -102,18 +108,18 @@ html, body {
       &:hover {
         & .ctrls__btn {
           transition: all .3s;
-          border-color: transparent transparent transparent rgba(255, 81, 0, 0.925);
+          border-color: transparent transparent transparent $c-orange;
         }
         & .ctrls__title {
           transition: all .3s;
-          color: rgba(255, 81, 0, 0.925);
+          color: $c-orange;
         }
         &.-is-active {
           & .ctrls__btn {
-            border-color: rgba(4, 0, 255, 0.87);
+            border-color: $c-blue;
           }
           & .ctrls__title {
-            color: rgba(4, 0, 255, 0.87);
+            color: $c-blue;
           }
         }
       }
@@ -138,6 +144,17 @@ html, body {
   & .ctrls__title {
     font-size: 24px;
     transition: all .3s;
+  }
+  & .ctrls__toggle {
+    border: 1px solid black;
+    padding: 8px 16px;
+    transition: all .3s;
+
+    &:hover {
+      border-color: $c-orange;
+      color: $c-orange;
+      transition: all .3s;
+    }
   }
 }
 

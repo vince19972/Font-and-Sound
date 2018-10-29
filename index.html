@@ -26,50 +26,50 @@
             <div class="ctrls__wrapper js-tone" data-target="heading-bass" data-typeface="kairo">
               <button class="ctrls__wrapper-top js-tone_trigger" data-target="heading-bass" data-typeface="kairo">
                 <div class="ctrls__btn"></div>
-                <h3 class="ctrls__title">HEADING</h3>
+                <h3 class="ctrls__title js-view_textChange" data-text-change="title_heading">HEADING</h3>
               </button>
               <form class="ctrls__sliders sliders">
                 <table>
                   <tbody>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">weight</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="bass_pitch">weight</h4>
                       </th>
-                      <td class="sliders__bar-val -min">250</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="bass_pitch_min">250</td>
                       <td class="sliders__slide">
                         <input type="range" step="1" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -wght" name="wght" value="500" min="250" max="900">
                       </td>
-                      <td class="sliders__bar-val -max">900</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="bass_pitch_min">900</td>
                     </tr>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">size</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="bass_volume">size</h4>
                       </th>
-                      <td class="sliders__bar-val -min">1</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="bass_volume_min">1</td>
                       <td class="sliders__slide">
                         <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -size" name="font-size" value="8" min="1" max="10">
                       </td>
-                      <td class="sliders__bar-val -max">10</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="bass_volume_max">10</td>
                     </tr>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">width</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="bass_bpm">width</h4>
                       </th>
-                      <td class="sliders__bar-val -min">75</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="bass_bpm_min">75</td>
                       <td class="sliders__slide">
                         <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -wdth" name="wdth" value="100" min="75" max="125">
                       </td>
-                      <td class="sliders__bar-val -max">125</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="bass_bpm_min">125</td>
                     </tr>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">italic</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="bass_distort">italic</h4>
                       </th>
-                      <td class="sliders__bar-val -min">0</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="bass_distort_min">0</td>
                       <td class="sliders__slide">
                         <input type="range" step="0.01" data-target="heading-bass" data-typeface="kairo" class="js-ctrl_slide -ital" name="ital" value="0" min="0" max="1">
                       </td>
-                      <td class="sliders__bar-val -max">1</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="bass_distort_min">1</td>
                     </tr>
                   </tbody>
                 </table>
@@ -78,44 +78,47 @@
             <div class="ctrls__wrapper js-tone" data-target="paragraph-melody" data-typeface="kairo">
               <button class="ctrls__wrapper-top js-tone_trigger" data-target="paragraph-melody" data-typeface="kairo">
                 <div class="ctrls__btn"></div>
-                <h3 class="ctrls__title">PARAGRAPH</h3>
+                <h3 class="ctrls__title js-view_textChange" data-text-change="title_paragraph">PARAGRAPH</h3>
               </button>
               <form class="ctrls__sliders sliders">
                 <table>
                   <tbody>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">line height</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="osc_filter">line height</h4>
                       </th>
-                      <td class="sliders__bar-val -min">1.0</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="osc_filter_min">1.0</td>
                       <td class="sliders__slide">
                         <input type="range" step="0.01" data-target="paragraph-melody" data-typeface="kairo" class="js-ctrl_slide -line-height" name="line-height" value="1.6" min="1.0" max="5.0">
                       </td>
-                      <td class="sliders__bar-val -max">5.0</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="osc_filter_max">5.0</td>
                     </tr>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">letter spacing</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="osc_frequency">letter spacing</h4>
                       </th>
-                      <td class="sliders__bar-val -min">0</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="osc_frequency_min">0</td>
                       <td class="sliders__slide">
                         <input type="range" step="0.01" data-target="paragraph-melody" data-typeface="kairo" class="js-ctrl_slide -letter-spacing" name="letter-spacing" value="0" min="0" max="1">
                       </td>
-                      <td class="sliders__bar-val -max">1</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="osc_frequency_max">1</td>
                     </tr>
                     <tr>
                       <th class="sliders__type">
-                        <h4 class="sliders__type-title">size</h4>
+                        <h4 class="sliders__type-title js-view_textChange" data-text-change="osc_volume">size</h4>
                       </th>
-                      <td class="sliders__bar-val -min">8</td>
+                      <td class="sliders__bar-val -min js-view_textChange" data-text-change="osc_volume_min">8</td>
                       <td class="sliders__slide">
                         <input type="range" step="1" data-target="paragraph-melody" data-typeface="kairo" class="js-ctrl_slide -size" name="font-size" value="20" min="8" max="40">
                       </td>
-                      <td class="sliders__bar-val -max">40</td>
+                      <td class="sliders__bar-val -max js-view_textChange" data-text-change="osc_volume_max">40</td>
                     </tr>
                   </tbody>
                 </table>
               </form>
+            </div>
+            <div class="ctrls__wrapper -btn">
+              <button class="ctrls__toggle js-view_trigger">TO SOUND VIEW</button>
             </div>
           </div>
         </div>
