@@ -31,5 +31,44 @@ export const params = {
     },
     distortion: 0,
     interval: '4n'
+  },
+  melody: {
+    filter: {
+      val: 1250,
+      min: 0,
+      max: 5000
+    },
+    frequency: {
+      val: 120,
+      min: 120,
+      max: 2400
+    },
+    volume: {
+      val: 0,
+      min: -40,
+      max: 24
+    },
+  }
+}
+
+export const helpers = {
+  getWaveFormType(val) {
+    switch(val) {
+      case 1:
+        return 'sine'
+        break
+      case 2:
+        return 'sawtooth'
+        break
+      case 3:
+        return 'square'
+        break
+      case 4:
+        return 'triangle'
+        break
+      default:
+        return 'sine'
+        break
+    }
   }
 }

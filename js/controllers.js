@@ -1,4 +1,4 @@
-import { store, params } from './store'
+import { store, params, helpers } from './store'
 
 /* ------------------------------------
 *  variables declarations
@@ -105,8 +105,13 @@ const set = {
         params.bass.pitch.val = toneObj.params.pitch
         break
       case 'font-size':
-        toneObj.params.volume = get.mappedVal('bass', 'volume', val, minVal, maxVal)
-        params.bass.volume.val = toneObj.params.volume
+        if (alterTarget === 'heading-bass') {
+          toneObj.params.volume = get.mappedVal('bass', 'volume', val, minVal, maxVal)
+          params.bass.volume.val = toneObj.params.volume
+        } else {
+          params.melody.volume.val = get.mappedVal('melody', 'volume', val, minVal, maxVal)
+          toneObj.osc.volume.value = params.melody.volume.val
+        }
         break;
       case 'wdth':
         Tone.Transport.bpm.value = get.scaleVal(val, minVal, maxVal, params.bpm.min, params.bpm.max)
@@ -121,9 +126,15 @@ const set = {
         toneObj.sampler.connect(distortion)
         distortion.toMaster()
         break;
+      case 'letter-spacing':
+        params.melody.frequency.val = get.mappedVal('melody', 'frequency', val, minVal, maxVal)
+        toneObj.osc.frequency.value = params.melody.frequency.val
+      case 'line-height':
+        params.melody.filter.val = get.mappedVal('melody', 'filter', val, minVal, maxVal)
+        toneObj.toneFilter.frequency.value = params.melody.filter.val
     }
   },
-  updateStyle(target, val, type, isVariableFont) {
+  updateStyle(target, val, type, isVariableFont, targetType) {
     let unit = ''
 
     if (isVariableFont) {
@@ -132,7 +143,7 @@ const set = {
     } else {
       switch (type) {
         case 'font-size':
-          unit = 'vw'
+          unit = targetType === 'paragraph-melody' ? 'px' : 'vw'
           break
         case 'line-height':
           unit = 'em'
@@ -165,7 +176,7 @@ $(document).ready(function() {
       const isVarFont = check.isVariableFont(slideType)
       const $target = $(`${nodes.typeface}[${data.alterTarget}='${alterTarget}'][${data.typeface}='${fontType}']`)
 
-      set.updateStyle($target, val, slideType, isVarFont)
+      set.updateStyle($target, val, slideType, isVarFont, alterTarget)
       set.updateSound($slide, val)
     })
 

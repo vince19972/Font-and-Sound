@@ -1,4 +1,4 @@
-import { store, params } from './store'
+import { store, params, helpers } from './store'
 
 /* ------------------------------------
 *  variables declarations
@@ -32,7 +32,7 @@ const get = {
       soundTarget,
       fontType
     }
-  },
+  }
 }
 
 const set = {
@@ -42,9 +42,10 @@ const set = {
     const toneObjs = Array.from(toneNodes).map(toneNode => {
       const $toneNode = $(toneNode)
       const { melody } = store[fontType]
+      const { filter, frequency } = params.melody
 
       // timbre settings
-      const toneFilter = new Tone.Filter(2000, "highpass")
+      const toneFilter = new Tone.Filter(filter.val, "highpass")
       toneFilter.toMaster()
 
       const ampEnv = new Tone.AmplitudeEnvelope({
@@ -56,7 +57,7 @@ const set = {
       ampEnv.releaseCurve = "linear"
       ampEnv.connect(toneFilter)
 
-      const osc = new Tone.Oscillator(440,  "sawtooth")
+      const osc = new Tone.Oscillator(frequency.val,  "sawtooth")
       osc.connect(ampEnv)
       osc.start()
 
@@ -169,15 +170,17 @@ $(document).ready(function() {
 
       // play sound
       if (!bassObj.isPlaying) {
+        // bass settings
         Tone.Transport.scheduleRepeat(() => {
           bassObj.sampler.triggerAttack(bassPitch.val)
           bassObj.sampler.volume.value = bassVolume.val
         }, bassInterval)
 
+        // melody settings
         Tone.Transport.scheduleRepeat(() => {
-          melodyObj.osc.frequency.value = 'C1'
+          // melodyObj.osc.frequency.value = 'C1'
           melodyObj.ampEnv.triggerAttack()
-        }, bassInterval)
+        }, "2n")
 
         // transport
         Tone.Transport.start()
