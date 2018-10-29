@@ -1,3 +1,9 @@
+import { store, params } from './store'
+
+/* ------------------------------------
+*  variables declarations
+* ------------------------------------ */
+
 const main = 'js-tone'
 
 const nodes = {
@@ -12,9 +18,9 @@ const flags = {
   }
 }
 
-const store = {
-  typeSet: {}
-}
+/* ------------------------------------
+*  helper functions
+* ------------------------------------ */
 
 const get = {
   toneData(target) {
@@ -30,15 +36,19 @@ const get = {
 }
 
 const set = {
-  init(toneSets) {
+  initToneObj(toneSets, samplerPitch) {
     toneSets.each((index, toneSet) => {
       const $toneSet = $(toneSet)
       const { fontType } = get.toneData($toneSet)
       const $childTones = $toneSet.find(nodes.trigger)
+
+      // get samplers keys and values
       const samplers = Array.from($childTones).map(toneNode => {
         const $toneNode = $(toneNode)
         const soundTarget = $toneNode.attr(flags.data.soundTarget)
-        const toneSampler = new Tone.Sampler({'A1': `/assets/sounds/${fontType}/${soundTarget}.mp3`})
+        const samplerObj = {}
+        samplerObj[samplerPitch] = `/assets/sounds/${fontType}/${soundTarget}.mp3`
+        const toneSampler = new Tone.Sampler(samplerObj)
         toneSampler.toMaster()
 
         return {
@@ -46,37 +56,64 @@ const set = {
           sampler: toneSampler
         }
       })
-      store.typeSet[fontType] = {}
+
+      // construct tone objects
+      store.toneSets[fontType] = {}
       samplers.forEach(toneSampler => {
         const { set, sampler } = toneSampler
-        store.typeSet[fontType][set] = {
+        store.toneSets[fontType][set] = {
           sampler,
-          isPlaying: false
+          isPlaying: false,
+          params: {
+            pitch: params.bass.pitch
+          }
         }
       })
     })
+  },
+  initToneSetting() {
+    const { bpm, timeSignature } = params
+    Tone.Transport.bpm.value = bpm.val
+    Tone.Transport.timeSignature = timeSignature
   }
 }
+
+/* ------------------------------------
+*  main programm
+* ------------------------------------ */
 
 $(document).ready(function() {
   const $tone = $(nodes.main)
   const hasTone = $tone.length > 0 || $tone !== null
   const { data } = flags
 
+  // tone settings
   if (hasTone) {
-    set.init($tone)
-    // console.log(store.typeSet)
-
+    // vars declaration
     const $triggers = $(nodes.trigger)
+    const { pitch: bassPitch, interval: bassInterval } = params.bass
+
+    // init basic settings
+    set.initToneObj($tone, bassPitch.val)
+    set.initToneSetting()
+
+    // trigger event
     $triggers.on('click', event => {
       const $trigger = $(event.currentTarget)
       const { soundTarget, fontType } = get.toneData($trigger)
-      const soundObj = store.typeSet[fontType][soundTarget]
+      const soundObj = store.toneSets[fontType][soundTarget]
 
       // update state
       soundObj.isPlaying = !soundObj.isPlaying
       // play sound
-      soundObj.sampler.triggerAttack('A1')
+      if (soundObj.isPlaying) {
+        Tone.Transport.scheduleRepeat(() => {
+          soundObj.sampler.triggerAttack(bassPitch.val)
+        }, bassInterval)
+        Tone.Transport.start()
+      } else {
+        Tone.Transport.stop()
+      }
     })
   }
 })
